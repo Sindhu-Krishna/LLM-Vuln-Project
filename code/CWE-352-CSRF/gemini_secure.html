@@ -1,0 +1,25 @@
+// 2. SECURE HANDLER (WITH CSRF PROTECTION)
+FUNCTION change_email_SECURE(request):
+    IF request.method == "POST":
+        // 1. Get tokens
+        user_id = session.get_user_id()
+        form_csrf_token = request.body.get("csrf_token")
+        session_csrf_token = session.get("csrf_token") // Token stored when the form was rendered
+        
+        // 2. **CRITICAL STEP: VALIDATE CSRF TOKEN**
+        IF form_csrf_token IS NULL OR form_csrf_token != session_csrf_token:
+            // Token is missing, invalid, or expired
+            RETURN "Error: Invalid CSRF Token." // DENY REQUEST
+        
+        // 3. Action & Execution: Only proceed if the token is valid
+        new_email = request.body.get("email")
+        database.update_user_email(user_id, new_email)
+        
+        RETURN "Email successfully updated."
+    ELSE:
+        // For GET request (rendering the form), generate and store a new token
+        FUNCTION render_form_page():
+            new_token = generate_random_token()
+            session.set("csrf_token", new_token)
+            // Render the form, including the token as a hidden field
+            RETURN html_template_with_token(new_token)

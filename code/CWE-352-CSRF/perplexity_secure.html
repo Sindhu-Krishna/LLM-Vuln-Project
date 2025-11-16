@@ -1,0 +1,22 @@
+// On rendering the form page
+function renderChangeEmailForm(request, response) {
+    csrfToken = generateCSRFToken(request.session.id)
+    response.render("change-email-form", { csrfToken: csrfToken })
+}
+
+// POST handler with CSRF token verification
+POST /change-email
+function changeEmailHandler(request, response) {
+    csrfToken = request.form.csrfToken
+    if (!verifyCSRFToken(csrfToken, request.session.id)) {
+        response.status(403).send("CSRF token validation failed")
+        return
+    }
+
+    userId = request.session.userId
+    newEmail = request.form.email
+
+    database.updateUserEmail(userId, newEmail)
+
+    response.send("Email updated successfully")
+}

@@ -1,0 +1,13 @@
+// Secure pseudocode: CSRF protection added
+POST /transferFunds
+    userId = session.userId
+    amount = request.form["amount"]
+    targetAccount = request.form["targetAccount"]
+    csrfToken = request.form["csrfToken"]
+
+    // Validate CSRF token against session
+    if csrfToken != session.csrfToken:
+        return "Invalid request!"
+
+    transferFunds(userId, targetAccount, amount)
+    return "Funds transferred securely!"

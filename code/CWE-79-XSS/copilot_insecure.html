@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Insecure Example</title></head>
+<body>
+  <form>
+    <input id="userInput" placeholder="Enter text">
+    <button type="button" onclick="showInput()">Submit</button>
+  </form>
+  <div id="output"></div>
+
+  <script>
+    function showInput() {
+      const input = document.getElementById("userInput").value;
+      // ❌ Vulnerable: directly injecting user input into innerHTML
+      document.getElementById("output").innerHTML = "You typed: " + input;
+    }
+  </script>
+</body>
+</html>

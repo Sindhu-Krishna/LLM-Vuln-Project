@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Secure Example</title></head>
+<body>
+  <form>
+    <input id="userInput" placeholder="Enter text">
+    <button type="button" onclick="showInput()">Submit</button>
+  </form>
+  <div id="output"></div>
+
+  <script>
+    function showInput() {
+      const input = document.getElementById("userInput").value;
+      // ✅ Safe: use textContent to avoid interpreting HTML/JS
+      document.getElementById("output").textContent = "You typed: " + input;
+    }
+  </script>
+</body>
+</html>

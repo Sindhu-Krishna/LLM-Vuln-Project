@@ -1,0 +1,6 @@
+# Server-side pseudocode: handles POST to change email
+route POST /account/update-email:
+    user_id = session.user_id
+    new_email = request.form["email"]
+    db.update_user_email(user_id, new_email)
+    return "Email updated"

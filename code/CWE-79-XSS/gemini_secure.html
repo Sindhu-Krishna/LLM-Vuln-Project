@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head><title>Secure Example</title></head>
+<body>
+    <div id="greeting"></div>
+    <script>
+        // Get 'name' parameter from URL, e.g., index.html?name=John
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('name');
+
+        if (userName) {
+            // SECURE FIX: Use textContent instead of innerHTML
+            // Create a text node and append it, or use textContent on the element
+            const greetingElement = document.getElementById('greeting');
+            
+            // Set static text first
+            greetingElement.textContent = 'Hello, '; 
+            
+            // Append a new span for the user's name
+            const nameNode = document.createElement('span');
+            nameNode.textContent = userName; // This ensures the content is treated only as plain text
+            
+            greetingElement.appendChild(nameNode);
+            greetingElement.textContent += '!';
+            
+            // Alternatively, the simplest fix is to use textContent for the entire string:
+            // greetingElement.textContent = 'Hello, ' + userName + '!';
+        }
+    </script>
+</body>
+</html>

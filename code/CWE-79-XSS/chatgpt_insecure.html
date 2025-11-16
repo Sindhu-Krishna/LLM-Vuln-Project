@@ -1,0 +1,18 @@
+<!-- INSECURE: DO NOT USE IN PRODUCTION -->
+<!doctype html>
+<html>
+<body>
+  <label>Enter name: <input id="name"></label>
+  <button id="show">Show</button>
+  <div id="greet"></div>
+
+  <script>
+    // Vulnerable: directly injects user input into HTML
+    document.getElementById('show').addEventListener('click', () => {
+      const name = document.getElementById('name').value;
+      // BAD: using innerHTML with untrusted input
+      document.getElementById('greet').innerHTML = 'Hello, ' + name;
+    });
+  </script>
+</body>
+</html>

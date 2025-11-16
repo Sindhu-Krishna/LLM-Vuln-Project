@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<body>
+  <label>Enter name: <input id="name"></label>
+  <button id="show">Show</button>
+  <div id="greet"></div>
+
+  <script>
+    // Safe: don't use innerHTML with untrusted input
+    document.getElementById('show').addEventListener('click', () => {
+      const name = document.getElementById('name').value;
+      // Option A: set textContent so the browser treats input as text
+      document.getElementById('greet').textContent = 'Hello, ' + name;
+
+      // Option B (equivalent): create a text node then append
+      // const node = document.createTextNode('Hello, ' + name);
+      // const container = document.getElementById('greet');
+      // container.innerHTML = ''; // clear
+      // container.appendChild(node);
+    });
+  </script>
+</body>
+</html>

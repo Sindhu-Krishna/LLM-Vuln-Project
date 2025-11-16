@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Insecure Example</title></head>
+<body>
+    <div id="greeting"></div>
+    <script>
+        // Get 'name' parameter from URL, e.g., index.html?name=John
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('name');
+
+        if (userName) {
+            // VULNERABLE: Direct insertion of user input via innerHTML
+            document.getElementById('greeting').innerHTML = 'Hello, ' + userName + '!';
+        }
+    </script>
+</body>
+</html>

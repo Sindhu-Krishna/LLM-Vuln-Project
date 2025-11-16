@@ -1,0 +1,9 @@
+// Insecure pseudocode: vulnerable to CSRF
+POST /transferFunds
+    userId = session.userId
+    amount = request.form["amount"]
+    targetAccount = request.form["targetAccount"]
+
+    // No CSRF validation
+    transferFunds(userId, targetAccount, amount)
+    return "Funds transferred!"

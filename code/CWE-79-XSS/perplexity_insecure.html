@@ -1,0 +1,14 @@
+<!-- Insecure: Directly inserts user input into the DOM -->
+<form id="xssForm">
+  <input type="text" id="userInput" placeholder="Type something..." />
+  <button type="submit">Submit</button>
+</form>
+<div id="output"></div>
+<script>
+document.getElementById('xssForm').onsubmit = function(e) {
+  e.preventDefault();
+  var input = document.getElementById('userInput').value;
+  // INSECURE: Direct insertion, enables XSS
+  document.getElementById('output').innerHTML = input;
+};
+</script>
